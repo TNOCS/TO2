@@ -1,0 +1,566 @@
+{
+    "title": "Alblasserwaard",
+    "description": "csMap is developed by the Dutch Research Organisation TNO, in first instance for the Dutch Ministry of Health (VWS).",
+    "url": "https://github.com/TNOCS/csMap",
+    "otpServer": "http://localhost:8080/otp/routers",
+    "logo": "images/CommonSenseRound.png",
+    "connected": true,
+    "timeLine" : {
+        "zoomLevelName" : "minutes",
+        "isLive" : true,
+        "focus" : 1436336288044,
+        "zoomLevel" : 3600000,
+        "start" : 1436033887529,
+        "end" : 1436638687529,
+        "range" : 604800000
+    },
+    "dashboards": [{
+        "id": "home",
+        "name": "Home",
+        "visiblelayers": [],
+        "showTimeline": true,
+        "showLeftmenu": true,
+        "showMap": true,
+        "viewBounds": {
+            "southWest": [
+                51.7,
+                4.5
+            ],
+            "northEast": [
+                52.1,
+                5.4
+            ]
+        }
+    }, {
+        "id": "nomap",
+        "name": "No Map",
+        "showTimeline": false,
+        "showLeftmenu": true,
+        "showMap": false
+    }, {
+        "id": "datatable",
+        "name": "Table",
+        "showTimeline": false,
+        "showLeftmenu": false,
+        "showMap": false,
+        "widgets": [{
+            "directive": "datatable",
+            "borderwidth": "0px",
+            "width": "100%",
+            "height": "100%"
+        }]
+    }],
+    "expertMode": 1,
+    "userPrivileges": {
+        "mca": {
+            "expertMode": false
+        },
+        "heatmap": {
+            "expertMode": false
+        }
+    },
+    "accentColor": "Green",
+    "baselayers": {},
+    "groups": [{
+        "languages": {
+            "nl": {
+                "title": "Infrastructuur",
+                "description": "Lagen met betrekking tot infrastructuur."
+            },
+            "en": {
+                "title": "Infrastructure",
+                "description": "Layers involving infrastructure."
+            }
+        },
+        "clustering": false,
+        "clusterLevel": 14,
+        "layers": [{
+            "id": "Omtrek",
+            "reference": "Omtrek",
+            "title": "Omtrek",
+            "description": "Omtrek van de Alblasserwaard.",
+            "type": "GeoJson",
+            "url": "data/projects/20151006/omtrek.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "Dijken",
+            "reference": "Dijken",
+            "languages": {
+                "nl": {
+                    "title": "Dijken",
+                    "description": "Dijken in Nederland."
+                },
+                "en": {
+                    "title": "Dikes",
+                    "description": "Dikes in the Netherlands."
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20151006/dijken_albl.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "Dikepoles",
+            "reference": "Dikepoles",
+            "isSublayer": true,
+            "languages": {
+                "nl": {
+                    "title": "Dijkpalen en -nummers",
+                    "description": "Dijkpalen en -nummers in de buurt van dijken en waterwegen."
+                },
+                "en": {
+                    "title": "Dike poles",
+                    "description": "Dike poles and numbers along dikes and waterways."
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20151006/dikepoles_albl.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "Provinciale wegen",
+            "reference": "Wegen",
+            "languages": {
+                "nl": {
+                    "title": "Provinciale wegen Alblasserwaard",
+                    "description": "Provinciale wegen in Alblasserwaard."
+                },
+                "en": {
+                    "title": "Provincial roads Alblasserwaard",
+                    "description": "Provincial roads in Alblasserwaard."
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20151006/wegen_albl.json",
+            "enabled": false,
+            "opacity": 100
+        },{
+          "id": "net",
+          "title": "Electricity net",
+          "description": "These are the locations of the electricity networks in the Alblasserwaard.",
+          "type": "GeoJson",
+          "renderType": "GeoJson",
+          "url": "data/projects/20151006/electr_albl_with_contours.json",
+          "typeUrl": "data/resourceTypes/electr.json",
+          "opacity": 100,
+          "languages": {
+            "nl": {
+              "title": "Elektriciteitsnet",
+              "description": "De locaties van de elektriciteitsnetwerken in de Alblasserwaard."
+            },
+            "en": {
+              "title": "Electricity net",
+              "description": "These are the locations of the electricity networks in the Alblasserwaard."
+            }
+          }
+        },
+        {
+            "id": "Buisleidingen",
+            "reference": "Buizen",
+            "languages": {
+                "nl": {
+                    "title": "Buisleidingen Alblasserwaard",
+                    "description": "Buisleidingen in Alblasserwaard."
+                },
+                "en": {
+                    "title": "Buisleidingen Alblasserwaard",
+                    "description": "Buisleidingen in Alblasserwaard."
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20151006/buisleidingen_albl.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "Marvel",
+            "reference": "Marvel",
+            "languages": {
+                "nl": {
+                    "title": "Marvel",
+                    "description": ""
+                },
+                "en": {
+                    "title": "Marvel",
+                    "description": ""
+                }
+            },
+            "type": "marvel",
+            "renderType": "geojson",
+            "url": "api/layers/tankstations",
+            "typeUrl": "data/resourceTypes/Marvel.json",
+            "enabled": false,
+            "opacity": 100,
+            "isDynamic": true,
+            "gui": {}
+        }, {
+            "id": "Domino",
+            "reference": "Domino",
+            "languages": {
+                "nl": {
+                    "title": "Domino",
+                    "description": ""
+                },
+                "en": {
+                    "title": "Domino",
+                    "description": ""
+                }
+            },
+            "type": "geojson",
+            "renderType": "geojson",
+            "url": "data/projects/empty.json",
+            "typeUrl": "data/resourceTypes/Marvel.json",
+            "enabled": false,
+            "opacity": 100,
+            "gui": {}
+        }]
+    }, {
+        "languages": {
+            "nl": {
+                "title": "Kritieke objecten",
+                "description": "Demonstreert kritieke objecten."
+            },
+            "en": {
+                "title": "Critical infrastructure",
+                "description": "Demonstrates critical infrastructure."
+            }
+        },
+        "clustering": true,
+        "clusterLevel": 13,
+        "oneLayerActive": false,
+        "layers": [{
+            "id": "HazardousObjects",
+            "reference": "HazardousObjects",
+            "languages": {
+                "nl": {
+                    "title": "Gevaarlijke objecten",
+                    "description": "Gevaarlijke objecten in de Alblasserwaard."
+                },
+                "en": {
+                    "title": "Hazardous objects",
+                    "description": "Hazardous objects in the Alblasserwaard."
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20151006/hazardous_obj_albl.json",
+            "typeUrl": "data/resourceTypes/HazardousObject.json",
+            "defaultFeatureType": "HazardousObject",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "OOVPOI",
+            "reference": "OOVPOI",
+            "languages": {
+                "nl": {
+                    "title": "Nederlandse hulpdiensten",
+                    "description": "Nederlandse hulpdiensten POI's in de Alblasserwaard."
+                },
+                "en": {
+                    "title": "Dutch Emergency Amenities",
+                    "description": "Dutch Emergency Amenities Points of Interest in the Alblasserwaard."
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20150511/OOV-POI-Albl.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "Childcare",
+            "reference": "Childcare",
+            "languages": {
+                "nl": {
+                    "title": "Kinderzorg kaart",
+                    "description": "Kinderzorg kaart Alblasserwaard."
+                },
+                "en": {
+                    "title": "Child care map",
+                    "description": "Child care map Alblasserwaard."
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20150511/childcare-Albl.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "Carecure",
+            "reference": "Carecure",
+            "languages": {
+                "nl": {
+                    "title": "Witte kaart",
+                    "description": "Zorglocaties Alblasserwaard."
+                },
+                "en": {
+                    "title": "Care 'n cure map",
+                    "description": "Care 'n cure location in Alblasserwaard."
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20150511/carecure-Albl.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+          "id": "c2000",
+          "type": "GeoJson",
+          "renderType": "GeoJson",
+          "url": "data/projects/20151006/c2000_albl.json",
+          "typeUrl": "data/resourceTypes/c2000mast.json",
+          "defaultFeatureType": "c2000mast",
+          "opacity": 100,
+          "languages": {
+            "nl": {
+              "title": "C2000 masten",
+              "description": "De locaties van de C2000 masten in de Alblasserwaard."
+            },
+            "en": {
+              "title": "C2000 towers",
+              "description": "These are the locations of the C2000 towers in the Alblasserwaard."
+            }
+          }
+        }, {
+          "id": "gsm",
+          "type": "GeoJson",
+          "renderType": "GeoJson",
+          "url": "data/projects/20151006/gsmmasten_albl.json",
+          "typeUrl": "data/resourceTypes/gsmmast.json",
+          "defaultFeatureType": "gsmmast",
+          "opacity": 100,
+          "languages": {
+            "nl": {
+              "title": "GSM masten",
+              "description": "De locaties van de gsm masten in de Alblasserwaard."
+            },
+            "en": {
+              "title": "GSM towers",
+              "description": "These are the locations of the cell towers in the Alblasserwaard."
+            }
+          }
+        },{
+            "id": "Risico",
+            "reference": "Risico",
+            "languages": {
+                "nl": {
+                    "title": "Risico Alblasserwaard",
+                    "description": "Risico Alblasserwaard."
+                },
+                "en": {
+                    "title": "Risk Alblasserwaard",
+                    "description": "Risk Alblasserwaard."
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20150511/alblasserwaard_risico.json",
+            "enabled": false,
+            "opacity": 100
+        },{
+            "id": "cbs",
+            "reference": "cbs",
+            "languages": {
+                "nl": {
+                    "title": "CBS provincie data",
+                    "description": "(Bron: CBS)."
+                },
+                "en": {
+                    "title": "CBS Provinces",
+                    "description": "Dutch Provinces. (Source: CBS)"
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20150511/provincies_apr2015_simple.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "veiligheidsregio",
+            "reference": "veiligheidsregio",
+            "languages": {
+                "nl": {
+                    "title": "Veiligheidsregios",
+                    "description": "Statistische data per veiligheidsregio. (Bron: CBS, Regioatlas. Geactualiseerd: 1 november 2014.)"
+                },
+                "en": {
+                    "title": "Safety region",
+                    "description": "Statistical data per safety region. (Source: CBS, Regioatlas: 1 november 2014.)"
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20141104_csMap/veiligheidsregios.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "gemeentes",
+            "reference": "gemeentes",
+            "languages": {
+                "nl": {
+                    "title": "Gemeentes",
+                    "description": "Statistische data per gemeente. (Bron: CBS, BAG, TNO, DigiMV. Geactualiseerd: 1 november 2014.)"
+                },
+                "en": {
+                    "title": "Towns",
+                    "description": "Statistical data per city in Dutch. (Source: CBS, BAG, TNO, DigiMV. Geactualiseerd: 1 november 2014.)"
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20141104_csMap/gemeente.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "OpenBaseMap",
+            "reference": "OpenBaseMap",
+            "languages": {
+                "nl": {
+                    "title": "Open Base Map",
+                    "description": "Open Base Map"
+                },
+                "en": {
+                    "title": "Open Base Map",
+                    "description": "Open Base Map"
+                }
+            },
+            "type": "wms",
+            "wmsLayers": "3UXZBGL40TC06ZC1WSSFI5ODS7GWA7_MS",
+            "url": "https://kaart.geo4oov.nl/GWCGateWay/dispatch",
+            "enabled": false,
+            "opacity": 25
+        }, {
+            "reference": "flooding_t100_o",
+            "title": "Flooding t100 unprotected",
+            "description": "Flooding areas with probability of once in 100 years for unprotected areas (along rivers).",
+            "type": "GeoJson",
+            "url": "data/projects/20150511/flooding-areas_t100_vg2o-simplified.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "reference": "flooding_t100_b",
+            "title": "Flooding t100 protected",
+            "description": "Flooding areas with probability of once in 100 years for protected areas (within dikes).",
+            "type": "GeoJson",
+            "url": "data/projects/20150511/flooding-areas_t100_vg2b_2_simplified.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "reference": "flooding_t1000_o",
+            "title": "Flooding t1000 unprotected",
+            "description": "Flooding areas with probability of once in 1000 years for unprotected areas (along rivers).",
+            "type": "GeoJson",
+            "url": "data/projects/20150511/flooding-areas_t1000vg2o_simplified.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "reference": "flooding_t1000_b",
+            "title": "Flooding t1000 protected",
+            "description": "Flooding areas with probability of once in 1000 years for protected areas (within dikes).",
+            "type": "GeoJson",
+            "url": "data/projects/20150511/flooding-areas_t1000vg2b_simplified.json",
+            "enabled": false,
+            "opacity": 100
+        }]
+    }, {
+        "languages": {
+            "nl": {
+                "title": "Overig",
+                "description": "Demonstreert locaties van dijken en dijkpalen."
+            },
+            "en": {
+                "title": "Additional",
+                "description": "Demonstrates locations of dikes and dike-poles."
+            }
+        },
+        "clustering": true,
+        "clusterLevel": 12,
+        "layers": [{
+            "id": "Hospitals",
+            "reference": "Hospitals",
+            "languages": {
+                "nl": {
+                    "title": "Ziekenhuizen",
+                    "description": "De locaties van de Nederlandse ziekenhuizen."
+                },
+                "en": {
+                    "title": "Hospitals",
+                    "description": "These are the locations of the Dutch hospitals."
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20150511/locaties_mei2015.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "firestation",
+            "reference": "firestation",
+            "languages": {
+                "nl": {
+                    "title": "Brandweerkazernes",
+                    "description": "De locaties van de Nederlandse brandweerkazernes en opleidingscentra (Bron: IFV, BAG, 1 november 2014)."
+                },
+                "en": {
+                    "title": "Fire stations",
+                    "description": "These are the locations of the fire station. (Source: IFV, BAG, 1 november 2014.)"
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20141104_csMap/brandweerposten.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "traveltimes",
+            "reference": "traveltimes",
+            "languages": {
+                "nl": {
+                    "title": "Reistijd",
+                    "description": "De reistijd van een brandweerkazerne naar de zorginstelling (Bron: IFV, BAG: 1 november 2014)."
+                },
+                "en": {
+                    "title": "Travel times",
+                    "description": "This is the travel time from the nearest fire station to a care institute. (Bron: IFV, BAG: 1 november 2014.)"
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20141104_csMap/aanrijtijden.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "veiligheidsregio",
+            "reference": "veiligheidsregio",
+            "languages": {
+                "nl": {
+                    "title": "Veiligheidsregios",
+                    "description": "Statistische data per veiligheidsregio. (Bron: CBS, Regioatlas. Geactualiseerd: 1 november 2014.)"
+                },
+                "en": {
+                    "title": "Safety region",
+                    "description": "Statistical data per safety region. (Source: CBS, Regioatlas: 1 november 2014.)"
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20141104_csMap/veiligheidsregios.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "9d1dc210f8f5474f977c9d0f24df2ff8",
+            "reference": "zorgkantoor",
+            "title": "Health regions",
+            "description": "Data at the health office regions. (Source: CBS, BAG, TNO, DigiMV.)",
+            "type": "GeoJson",
+            "url": "data/projects/20141104_csMap/Regio ZK ZZP CBS.json",
+            "enabled": false,
+            "opacity": 100
+        }, {
+            "id": "accessibility",
+            "title": "Accessibility",
+            "description": "Bekijk afstanden vanaf een bepaald punt.",
+            "type": "GeoJson",
+            "renderType": "geojson",
+            "url": "http://134.221.20.206:8080/otp/routers/default/isochrone?&arriveBy=false&fromPlace=52.076403%2C4.369335&date=07-07-2015&time=11%3A10&mode=WALK&walkSpeed=2.0&bikeSpeed=8.0&precisionMeters=100&cutoffSec=60&cutoffSec=120&cutoffSec=300&cutoffSec=600&cutoffSec=1200",
+            "typeUrl": "data/resourcetypes/mobiliteit.json",
+            "defaultFeatureType": "Mobiliteit"
+        }, {
+            "id": "tripplanner",
+            "title": "Routeplanner",
+            "description": "Plan routes.",
+            "type": "GeoJson",
+            "renderType": "geojson",
+            "url": "http://134.221.20.206:8080/otp/routers/default/plan?arriveBy=false&fromPlace=52.081154%2C4.3243597&toPlace=52.096403%2C4.360335&date=07-07-2015&time=11%3A00&mode=BICYCLE&bikeSpeed=8.0&maxTimeSec=3600300&precisionMeters=100&zDataType=TIME&coordinateOrigin=52.076403%2C4.369335",
+            "typeUrl": "data/resourcetypes/mobiliteit.json",
+            "defaultFeatureType": "Route"
+        }]
+    }]
+}
