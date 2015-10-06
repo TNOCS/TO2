@@ -98,6 +98,8 @@
             },
             "type": "GeoJson",
             "url": "data/projects/20151006/dijken_albl.json",
+            "typeUrl": "data/resourceTypes/Dike.json",
+            "defaultFeatureType": "Dike",
             "enabled": false,
             "opacity": 100
         }, {
@@ -116,6 +118,8 @@
             },
             "type": "GeoJson",
             "url": "data/projects/20151006/dikepoles_albl.json",
+            "typeUrl": "data/resourceTypes/Dikepole.json",
+            "defaultFeatureType": "Dikepole",
             "enabled": false,
             "opacity": 100
         }, {
@@ -133,6 +137,8 @@
             },
             "type": "GeoJson",
             "url": "data/projects/20151006/wegen_albl.json",
+            "typeUrl": "data/resourceTypes/Road.json",
+            "defaultFeatureType": "Road",
             "enabled": false,
             "opacity": 100
         },{
