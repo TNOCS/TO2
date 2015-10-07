@@ -248,7 +248,7 @@
                 }
             },
             "type": "GeoJson",
-            "url": "data/projects/20151006/hazardous_obj_albl.json",
+            "url": "data/projects/20151006/gevaarlijke_stoffen_albl.json",
             "typeUrl": "data/resourceTypes/HazardousObject.json",
             "defaultFeatureType": "HazardousObject",
             "enabled": false,
