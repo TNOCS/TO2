@@ -1,1 +1,13 @@
 drone/node_modules/
+test/*.*
+website/*.js
+website/public/models/**/*.js
+website/public/directives/**/*.js
+test/
+website/node_modules/
+website/public/bower_components/
+website/public/cs/js/
+website/public/swagger/
+website/public/models/plane.gltf
+website/ServerComponents/*/*.d.ts
+website/public/data/projects/20150511/files/
