@@ -178,47 +178,6 @@
             "url": "data/projects/20151006/buisleidingen_albl.json",
             "enabled": false,
             "opacity": 100
-        }, {
-            "id": "Marvel",
-            "reference": "Marvel",
-            "languages": {
-                "nl": {
-                    "title": "Marvel",
-                    "description": ""
-                },
-                "en": {
-                    "title": "Marvel",
-                    "description": ""
-                }
-            },
-            "type": "marvel",
-            "renderType": "geojson",
-            "url": "api/layers/tankstations",
-            "typeUrl": "data/resourceTypes/Marvel.json",
-            "enabled": false,
-            "opacity": 100,
-            "isDynamic": true,
-            "gui": {}
-        }, {
-            "id": "Domino",
-            "reference": "Domino",
-            "languages": {
-                "nl": {
-                    "title": "Domino",
-                    "description": ""
-                },
-                "en": {
-                    "title": "Domino",
-                    "description": ""
-                }
-            },
-            "type": "geojson",
-            "renderType": "geojson",
-            "url": "data/projects/empty.json",
-            "typeUrl": "data/resourceTypes/Marvel.json",
-            "enabled": false,
-            "opacity": 100,
-            "gui": {}
         }]
     }, {
         "languages": {
@@ -267,7 +226,9 @@
                 }
             },
             "type": "GeoJson",
-            "url": "data/projects/20150511/OOV-POI-Albl.json",
+            "url": "data/projects/20151006/hulpdiensten.json",
+            "typeUrl": "data/resourceTypes/hulpdienst.json",
+            "defaultFeatureType": "hulpdienst",
             "enabled": false,
             "opacity": 100
         }, {
@@ -284,7 +245,9 @@
                 }
             },
             "type": "GeoJson",
-            "url": "data/projects/20150511/childcare-Albl.json",
+            "url": "data/projects/20151006/childcare_albl.json",
+            "typeUrl": "data/resourceTypes/childcare.json",
+            "defaultFeatureType": "childcare",
             "enabled": false,
             "opacity": 100
         }, {
@@ -301,7 +264,9 @@
                 }
             },
             "type": "GeoJson",
-            "url": "data/projects/20150511/carecure-Albl.json",
+            "url": "data/projects/20151006/care_n_cure_albl.json",
+            "typeUrl": "data/resourceTypes/carecure.json",
+            "defaultFeatureType": "carecure",
             "enabled": false,
             "opacity": 100
         }, {
@@ -340,41 +305,21 @@
               "description": "These are the locations of the cell towers in the Alblasserwaard."
             }
           }
-        },{
-            "id": "Risico",
-            "reference": "Risico",
-            "languages": {
-                "nl": {
-                    "title": "Risico Alblasserwaard",
-                    "description": "Risico Alblasserwaard."
-                },
-                "en": {
-                    "title": "Risk Alblasserwaard",
-                    "description": "Risk Alblasserwaard."
-                }
+        }]
+    }, {
+        "languages": {
+            "nl": {
+                "title": "Overig",
+                "description": "Demonstreert locaties van dijken en dijkpalen."
             },
-            "type": "GeoJson",
-            "url": "data/projects/20150511/alblasserwaard_risico.json",
-            "enabled": false,
-            "opacity": 100
-        },{
-            "id": "cbs",
-            "reference": "cbs",
-            "languages": {
-                "nl": {
-                    "title": "CBS provincie data",
-                    "description": "(Bron: CBS)."
-                },
-                "en": {
-                    "title": "CBS Provinces",
-                    "description": "Dutch Provinces. (Source: CBS)"
-                }
-            },
-            "type": "GeoJson",
-            "url": "data/projects/20150511/provincies_apr2015_simple.json",
-            "enabled": false,
-            "opacity": 100
-        }, {
+            "en": {
+                "title": "Additional",
+                "description": "Demonstrates locations of dikes and dike-poles."
+            }
+        },
+        "clustering": true,
+        "clusterLevel": 12,
+        "layers": [{
             "id": "veiligheidsregio",
             "reference": "veiligheidsregio",
             "languages": {
@@ -388,7 +333,7 @@
                 }
             },
             "type": "GeoJson",
-            "url": "data/projects/20141104_csMap/veiligheidsregios.json",
+            "url": "data/projects/20151006/veiligheidsregios.json",
             "enabled": false,
             "opacity": 100
         }, {
@@ -405,74 +350,10 @@
                 }
             },
             "type": "GeoJson",
-            "url": "data/projects/20141104_csMap/gemeente.json",
+            "url": "data/projects/20151006/gemeente.json",
             "enabled": false,
             "opacity": 100
         }, {
-            "id": "OpenBaseMap",
-            "reference": "OpenBaseMap",
-            "languages": {
-                "nl": {
-                    "title": "Open Base Map",
-                    "description": "Open Base Map"
-                },
-                "en": {
-                    "title": "Open Base Map",
-                    "description": "Open Base Map"
-                }
-            },
-            "type": "wms",
-            "wmsLayers": "3UXZBGL40TC06ZC1WSSFI5ODS7GWA7_MS",
-            "url": "https://kaart.geo4oov.nl/GWCGateWay/dispatch",
-            "enabled": false,
-            "opacity": 25
-        }, {
-            "reference": "flooding_t100_o",
-            "title": "Flooding t100 unprotected",
-            "description": "Flooding areas with probability of once in 100 years for unprotected areas (along rivers).",
-            "type": "GeoJson",
-            "url": "data/projects/20150511/flooding-areas_t100_vg2o-simplified.json",
-            "enabled": false,
-            "opacity": 100
-        }, {
-            "reference": "flooding_t100_b",
-            "title": "Flooding t100 protected",
-            "description": "Flooding areas with probability of once in 100 years for protected areas (within dikes).",
-            "type": "GeoJson",
-            "url": "data/projects/20150511/flooding-areas_t100_vg2b_2_simplified.json",
-            "enabled": false,
-            "opacity": 100
-        }, {
-            "reference": "flooding_t1000_o",
-            "title": "Flooding t1000 unprotected",
-            "description": "Flooding areas with probability of once in 1000 years for unprotected areas (along rivers).",
-            "type": "GeoJson",
-            "url": "data/projects/20150511/flooding-areas_t1000vg2o_simplified.json",
-            "enabled": false,
-            "opacity": 100
-        }, {
-            "reference": "flooding_t1000_b",
-            "title": "Flooding t1000 protected",
-            "description": "Flooding areas with probability of once in 1000 years for protected areas (within dikes).",
-            "type": "GeoJson",
-            "url": "data/projects/20150511/flooding-areas_t1000vg2b_simplified.json",
-            "enabled": false,
-            "opacity": 100
-        }]
-    }, {
-        "languages": {
-            "nl": {
-                "title": "Overig",
-                "description": "Demonstreert locaties van dijken en dijkpalen."
-            },
-            "en": {
-                "title": "Additional",
-                "description": "Demonstrates locations of dikes and dike-poles."
-            }
-        },
-        "clustering": true,
-        "clusterLevel": 12,
-        "layers": [{
             "id": "Hospitals",
             "reference": "Hospitals",
             "languages": {
@@ -523,50 +404,6 @@
             "url": "data/projects/20141104_csMap/aanrijtijden.json",
             "enabled": false,
             "opacity": 100
-        }, {
-            "id": "veiligheidsregio",
-            "reference": "veiligheidsregio",
-            "languages": {
-                "nl": {
-                    "title": "Veiligheidsregios",
-                    "description": "Statistische data per veiligheidsregio. (Bron: CBS, Regioatlas. Geactualiseerd: 1 november 2014.)"
-                },
-                "en": {
-                    "title": "Safety region",
-                    "description": "Statistical data per safety region. (Source: CBS, Regioatlas: 1 november 2014.)"
-                }
-            },
-            "type": "GeoJson",
-            "url": "data/projects/20141104_csMap/veiligheidsregios.json",
-            "enabled": false,
-            "opacity": 100
-        }, {
-            "id": "9d1dc210f8f5474f977c9d0f24df2ff8",
-            "reference": "zorgkantoor",
-            "title": "Health regions",
-            "description": "Data at the health office regions. (Source: CBS, BAG, TNO, DigiMV.)",
-            "type": "GeoJson",
-            "url": "data/projects/20141104_csMap/Regio ZK ZZP CBS.json",
-            "enabled": false,
-            "opacity": 100
-        }, {
-            "id": "accessibility",
-            "title": "Accessibility",
-            "description": "Bekijk afstanden vanaf een bepaald punt.",
-            "type": "GeoJson",
-            "renderType": "geojson",
-            "url": "http://134.221.20.206:8080/otp/routers/default/isochrone?&arriveBy=false&fromPlace=52.076403%2C4.369335&date=07-07-2015&time=11%3A10&mode=WALK&walkSpeed=2.0&bikeSpeed=8.0&precisionMeters=100&cutoffSec=60&cutoffSec=120&cutoffSec=300&cutoffSec=600&cutoffSec=1200",
-            "typeUrl": "data/resourcetypes/mobiliteit.json",
-            "defaultFeatureType": "Mobiliteit"
-        }, {
-            "id": "tripplanner",
-            "title": "Routeplanner",
-            "description": "Plan routes.",
-            "type": "GeoJson",
-            "renderType": "geojson",
-            "url": "http://134.221.20.206:8080/otp/routers/default/plan?arriveBy=false&fromPlace=52.081154%2C4.3243597&toPlace=52.096403%2C4.360335&date=07-07-2015&time=11%3A00&mode=BICYCLE&bikeSpeed=8.0&maxTimeSec=3600300&precisionMeters=100&zDataType=TIME&coordinateOrigin=52.076403%2C4.369335",
-            "typeUrl": "data/resourcetypes/mobiliteit.json",
-            "defaultFeatureType": "Route"
         }]
     }]
 }
