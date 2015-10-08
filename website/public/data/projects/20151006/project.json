@@ -4,7 +4,7 @@
     "url": "https://github.com/TNOCS/csMap",
     "otpServer": "http://localhost:8080/otp/routers",
     "logo": "images/CommonSenseRound.png",
-    "connected": true,
+    "connected": false,
     "timeLine" : {
         "zoomLevelName" : "minutes",
         "isLive" : true,
@@ -18,7 +18,7 @@
         "id": "home",
         "name": "Home",
         "visiblelayers": [],
-        "showTimeline": true,
+        "showTimeline": false,
         "showLeftmenu": true,
         "showMap": true,
         "viewBounds": {
@@ -50,7 +50,7 @@
             "height": "100%"
         }]
     }],
-    "expertMode": 1,
+    "expertMode": 2,
     "userPrivileges": {
         "mca": {
             "expertMode": false
@@ -139,6 +139,25 @@
             "url": "data/projects/20151006/wegen_albl.json",
             "typeUrl": "data/resourceTypes/Road.json",
             "defaultFeatureType": "Road",
+            "enabled": false,
+            "opacity": 100
+        },{
+            "id": "betuwe",
+            "reference": "betuwe",
+            "languages": {
+                "nl": {
+                    "title": "Betuwelijn",
+                    "description": "Route Betuwelijn door de Alblasserwaard."
+                },
+                "en": {
+                    "title": "Betuwelijn",
+                    "description": "Route Betuweline through Alblasserwaard."
+                }
+            },
+            "type": "GeoJson",
+            "url": "data/projects/20151006/betuwelijn.json",
+            "typeUrl": "data/resourceTypes/betuwelijn.json",
+            "defaultFeatureType": "betuwelijn",
             "enabled": false,
             "opacity": 100
         },{
