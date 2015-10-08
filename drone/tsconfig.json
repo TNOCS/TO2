@@ -21,7 +21,13 @@
         "!./node_modules/**/*"
     ],
     "files": [
+        "./Scripts/typings/chokidar/chokidar.d.ts",
+        "./Scripts/typings/express/express.d.ts",
+        "./Scripts/typings/form-data/form-data.d.ts",
         "./Scripts/typings/node/node.d.ts",
-        "./drone2geojson.ts"
+        "./Scripts/typings/request/request.d.ts",
+        "./Scripts/typings/winston/winston.d.ts",
+        "./drone2geojson.ts",
+        "./droneDataService.ts"
     ]
 }
