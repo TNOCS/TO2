@@ -1,4 +1,5 @@
 {
+    "id": "droneResourceTypes",
     "featureTypes": {
         "droneData": {
             "name": "droneData",
@@ -9,8 +10,8 @@
                 "drawingMode": "Point",
                 "iconWidth": 32,
                 "iconHeight": 32,
-                "iconUri": "images/sensor.png",
-                "nameLabel": "h"
+                "iconUri": "images/gauge.png",
+                "nameLabel": "hoogte"
             },
             "propertyTypeKeys": "timestamp,temperatuur,luchtdruk,luchtvochtigheid,hoogte,sensor1,sensor2,sensor3,sensor4"
         }
@@ -44,13 +45,6 @@
             "description": "Gemeten luchtvochtigheid.",
             "stringFormat": "{0:0.0}"
         },
-        "hoogte": {
-            "label": "hoogte",
-            "type": "number",
-            "title": "Hoogte",
-            "description": "Gemeten hoogte.",
-            "stringFormat": "{0:0.0}m"
-        },
         "sensor1": {
             "label": "sensor1",
             "type": "number",
@@ -79,16 +73,23 @@
             "description": "Gemeten data.",
             "stringFormat": "{0:0.0}"
         },
-        "h": {
-            "label": "h",
+        "hoogte": {
+            "label": "hoogte",
             "type": "number",
-            "title": "Water height [m]",
-            "description": "Estimated water height in meters.",
+            "title": "Hoogte",
+            "description": "Gemeten hoogte.",
+            "stringFormat": "{0:0.0}m"
+        },
+        "hoogte": {
+            "label": "hoogte",
+            "type": "number",
+            "title": "Vlieghoogte [m]",
+            "description": "Gemeten hoogte in meters.",
             "stringFormat": "{0:0.0}m",
             "legend": {
-                "id": "h",
+                "id": "hoogte",
                 "visualAspect": "fillColor",
-                "description": "Estimated water height [m]",
+                "description": "Gemeten hoogte [m]",
                 "legendKind": "interpolated",
                 "legendEntries": [{
                     "label": "0m",
@@ -121,6 +122,5 @@
                 }]
             }
         }
-    },
-    "id": "droneResourcetypes"
+    }
 }

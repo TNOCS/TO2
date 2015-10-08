@@ -76,10 +76,11 @@ function addSensorSet(file) {
         features: [],
         updated: 0,
         tags: ['drone', 'temperatuur', 'luchtvochtigheid', 'luchtdruk'],
-        dynamic: true,
-        type: "FeatureCollection",
+        isDynamic: true,
+        type: "dynamicgeojson",
         description: "Sensor data",
         defaultFeatureType: "droneData",
+        defaultLegendProperty: "hoogte",
         typeUrl: "api/resources/droneResourceTypes"
     };
     var req = request.post(layerUrl, { json: true, body: layerDef }, function (err, res, body) {
