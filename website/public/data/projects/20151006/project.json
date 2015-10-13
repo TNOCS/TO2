@@ -73,7 +73,7 @@
             }
         },
         "clustering": false,
-        "clusterLevel": 14,
+        "clusterLevel": 12,
         "layers": [{
             "id": "Omtrek",
             "reference": "Omtrek",
@@ -210,7 +210,7 @@
             }
         },
         "clustering": true,
-        "clusterLevel": 13,
+        "clusterLevel": 12,
         "oneLayerActive": false,
         "layers": [{
             "id": "HazardousObjects",

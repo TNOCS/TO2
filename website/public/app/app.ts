@@ -58,8 +58,8 @@ module App {
 
             $messageBusService.subscribe("project", (action: string) => {
                 if (action === "loaded") {
-                    this.accessibility = new Accessibility.AccessibilityModel();
-                    this.$layerService.addActionService(this.accessibility);
+                    //this.accessibility = new Accessibility.AccessibilityModel();
+                    //this.$layerService.addActionService(this.accessibility);
                     this.areafilter = new AreaFilter.AreaFilterModel();
                     this.$layerService.addActionService(this.areafilter);
                     this.contouraction = new ContourAction.ContourActionModel();
