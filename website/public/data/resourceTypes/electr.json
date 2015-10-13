@@ -1,5 +1,19 @@
 {
     "featureTypes" : {
+        "AffectedArea" : {
+            "name" : "AffectedArea",
+            "showAllProperties" : false,
+            "style" : {
+                "fillColor" : "#000000",
+                "strokeColor" : "#ff0000",
+                "strokeWidth" : 2,
+                "stroke" : true,
+                "fillOpacity" : 0.5,
+                "opacity" : 0.5,
+                "iconUri" : "images/circle.png"
+            },
+            "isInitialized" : false
+        },
         "data/resourceTypes/electr.json#msn_ylw-pushpin1013" : {
             "name" : "data/resourceTypes/electr.json#msn_ylw-pushpin1013",
             "showAllProperties" : false,
