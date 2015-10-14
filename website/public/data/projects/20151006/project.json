@@ -73,7 +73,7 @@
             }
         },
         "clustering": false,
-        "clusterLevel": 14,
+        "clusterLevel": 12,
         "layers": [{
             "id": "Omtrek",
             "reference": "Omtrek",
