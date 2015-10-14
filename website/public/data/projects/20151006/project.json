@@ -210,7 +210,7 @@
             }
         },
         "clustering": true,
-        "clusterLevel": 12,
+        "clusterLevel": 13,
         "oneLayerActive": false,
         "layers": [{
             "id": "HazardousObjects",

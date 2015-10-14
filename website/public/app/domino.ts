@@ -17,15 +17,15 @@ module App {
             var initResetOption = <IActionOption>{
                 title: "Init/reset states"
             };
-            initResetOption.callback = this.initResetAction;
+            initResetOption.callback = App.DominoModel.initResetAction;
             var setFailedOption = <IActionOption>{
                 title: "Set status to 'failed'"
             };
-            setFailedOption.callback = this.setFailedAction;
+            setFailedOption.callback = App.DominoModel.setFailedAction;
             var setOperationalOption = <IActionOption>{
                 title: "Set status to 'operational'"
             };
-            setOperationalOption.callback = this.setOperationalAction;
+            setOperationalOption.callback = App.DominoModel.setOperationalAction;
             return [initResetOption, setFailedOption, setOperationalOption];
             return [];
         }
@@ -33,7 +33,7 @@ module App {
         deselectFeature(feature: IFeature) { }
         updateFeature(feuture: IFeature) { }
 
-        public setFailedAction(feature: IFeature, layerService: csComp.Services.LayerService) {
+        public static setFailedAction(feature: IFeature, layerService: csComp.Services.LayerService) {
             console.log('domino:setFailedAction');
             if (!feature) return;
             var fType = layerService.getFeatureType(feature);
@@ -60,7 +60,30 @@ module App {
                             f.effectiveStyle.strokeColor = "#ff0000";
                             f.effectiveStyle.strokeWidth = 5;
                             layerService.updateFeature(f);
-                            if (f.id !== feature.id) count = count + 1;
+                            if (f.id !== feature.id) {
+                                count = count + 1;
+                            }
+                        }
+                    }
+                });
+                layerService.project.features.forEach((f) => {
+                    // check dependencies
+                    if (f.properties.hasOwnProperty('dependencies') && f.properties.hasOwnProperty('State') && f.properties['State'] !== 'failed') {
+                        var deps = f.properties['dependencies'];
+                        var nrFailedDeps = 0;
+                        deps.forEach((d) => {
+                            layerService.project.features.some((pf) => {
+                                if (pf.properties.hasOwnProperty('Name') && pf.properties['Name'] === d) {
+                                    if (pf.properties.hasOwnProperty('State') && pf.properties['State'] === 'failed') {
+                                        nrFailedDeps += 1;
+                                        return true;
+                                    }
+                                }
+                                return false;
+                            });
+                        });
+                        if (nrFailedDeps > 0 && nrFailedDeps >= deps.length) {
+                            App.DominoModel.setFailedAction(f, layerService);
                         }
                     }
                 });
@@ -73,7 +96,7 @@ module App {
             }
         }
 
-        public setOperationalAction(feature: IFeature, layerService: csComp.Services.LayerService) {
+        public static setOperationalAction(feature: IFeature, layerService: csComp.Services.LayerService) {
             console.log('domino:setOperationalAction');
             if (!feature) return;
             var contourId = feature.id + '-contour';
@@ -94,14 +117,17 @@ module App {
                     }
                 });
             } else {
-                feature.properties['State'] = 'operational';
-                feature.effectiveStyle.strokeColor = "#00ff00";
-                feature.effectiveStyle.strokeWidth = 5;
-                layerService.updateFeature(feature);
+                if (feature.geometry.type.toLowerCase() !== 'linestring') {
+                    feature.properties['State'] = 'operational';
+                    feature.effectiveStyle.strokeColor = "#00ff00";
+                    feature.effectiveStyle.strokeWidth = 5;
+                    layerService.updateFeature(feature);
+                }
             }
         }
 
-        public initResetAction(feature: IFeature, layerService: csComp.Services.LayerService) {
+        public static initResetAction(feature: IFeature, layerService: csComp.Services.LayerService) {
+            // Add property "State" to featureType if it does not exist yet
             for (var ft in layerService._featureTypes) {
                 if (ft.propertyTypeKeys) {
                     if (ft.propertyTypeKeys.split(";").some((key) => { return key.toLowerCase() === "state" })) {
@@ -113,14 +139,9 @@ module App {
                     }
                 }
             }
-
+            // Set all states to "operational"
             layerService.project.features.forEach((f) => {
-                f.properties['State'] = "operational";
-                if (f.geometry.type.toLowerCase() === "point") {
-                    f.effectiveStyle.strokeColor = "#00ff00";
-                    f.effectiveStyle.strokeWidth = 5;
-                    layerService.updateFeature(f);
-                }
+                App.DominoModel.setOperationalAction(f, layerService);
             });
         }
 
