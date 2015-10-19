@@ -10,9 +10,11 @@ import request = require('request');
  */
 
 // web server (where we post the sensor data too)
-var csWebServer = 'http://localhost:3002';
+var csWebServer = 'http://localhost:3333';
 // url for posting resource types (style)
 var resourceTypeUrl = csWebServer + '/api/resources/droneResourceTypes';
+// url for uploading images
+var imageUploadUrl = csWebServer + '/api/files/';
 // url for creating a new map layer, or for posting data (features).
 var layerUrl = csWebServer + '/api/layers';
 // folder which contains the sensor data
@@ -79,12 +81,36 @@ function addResourceType() {
             if (err) {
                 Winston.error('Error: ' + err);
             } else {
-                Winston.info('URL: ' + body);
+                Winston.info(`Posted resource file to ${resourceTypeUrl} successfully.`);
             }
         });
     });
-    // var form = req.form();
-    // form.append('file', fs.createReadStream('./droneResourceTypes.json'));
+    uploadImage('./images/gauge.png', (err, body) => {});
+}
+
+function uploadImage(file: string, callback: (err: Error, body?: any) => void) {
+    var url = imageUploadUrl + 'img/' + path.basename(file);
+    fs.readFile(file, (error, data) => {
+        if (error) {
+            Winston.error(`Error reading ${file}: ` + error);
+            return;
+        }
+        request({
+            url: url,
+            method: "POST",
+            json: true,
+            headers: {
+                "content-type": "application/json",
+            },
+            body: { base64: data.toString('base64') }
+        }, (err, res, body) => {
+            if (err) {
+                Winston.error('Error: ' + err);
+            } else {
+                Winston.info(`Posted image file to ${url} successfully.`);
+            }
+        });
+    });
 }
 
 function watchFolder(folder: string) {
@@ -108,8 +134,8 @@ function watchFolder(folder: string) {
 
 function addSensorSet(file: string) {
     var ext = path.extname(file);
-    if (ext !== '.txt') {
-        Winston.error(`Cannot read ${file}: Only .txt files are supported.`);
+    if (ext !== '.csv') {
+        Winston.error(`Cannot read ${file}: Only .csv files are supported.`);
         return;
     }
     // Create new layer for sensor data at web server
@@ -118,17 +144,18 @@ function addSensorSet(file: string) {
     var layerDef = {
         id: layerId,
         title: title,
-        storage: "file",
+        storage: 'file',
         useLog: false,
         features: [], // no initial data
         updated: 0,
         tags: ['drone', 'temperatuur', 'luchtvochtigheid', 'luchtdruk'],
+        enabled: true,
         isDynamic: true,
         type: "dynamicgeojson",
         description: "Sensor data",
         defaultFeatureType: "droneData",
         defaultLegendProperty: "hoogte",
-        typeUrl: "api/resources/droneResourceTypes"
+        typeUrl: '/api/resources/droneResourceTypes'
     };
     var req = request.post(layerUrl, { json: true, body: layerDef }, (err, res, body) => {
         if (err) {
@@ -140,7 +167,6 @@ function addSensorSet(file: string) {
     // Upload the data
     processFile(layerId, file);
     // TODO Create new layer for the drone position at web server
-
 }
 
 /**

@@ -3,8 +3,9 @@ var path = require('path');
 var Winston = require('winston');
 var chokidar = require('chokidar');
 var request = require('request');
-var csWebServer = 'http://localhost:3002';
+var csWebServer = 'http://localhost:3333';
 var resourceTypeUrl = csWebServer + '/api/resources/droneResourceTypes';
+var imageUploadUrl = csWebServer + '/api/files/';
 var layerUrl = csWebServer + '/api/layers';
 var dataFolder = './data';
 var minTimeBetweenSamples = 1000;
@@ -38,7 +39,33 @@ function addResourceType() {
                 Winston.error('Error: ' + err);
             }
             else {
-                Winston.info('URL: ' + body);
+                Winston.info("Posted resource file to " + resourceTypeUrl + " successfully.");
+            }
+        });
+    });
+    uploadImage('./images/gauge.png', function (err, body) { });
+}
+function uploadImage(file, callback) {
+    var url = imageUploadUrl + 'img/' + path.basename(file);
+    fs.readFile(file, function (error, data) {
+        if (error) {
+            Winston.error(("Error reading " + file + ": ") + error);
+            return;
+        }
+        request({
+            url: url,
+            method: "POST",
+            json: true,
+            headers: {
+                "content-type": "application/json",
+            },
+            body: { base64: data.toString('base64') }
+        }, function (err, res, body) {
+            if (err) {
+                Winston.error('Error: ' + err);
+            }
+            else {
+                Winston.info("Posted image file to " + url + " successfully.");
             }
         });
     });
@@ -62,8 +89,8 @@ function watchFolder(folder) {
 }
 function addSensorSet(file) {
     var ext = path.extname(file);
-    if (ext !== '.txt') {
-        Winston.error("Cannot read " + file + ": Only .txt files are supported.");
+    if (ext !== '.csv') {
+        Winston.error("Cannot read " + file + ": Only .csv files are supported.");
         return;
     }
     var title = path.basename(file, ext);
@@ -71,17 +98,18 @@ function addSensorSet(file) {
     var layerDef = {
         id: layerId,
         title: title,
-        storage: "file",
+        storage: 'file',
         useLog: false,
         features: [],
         updated: 0,
         tags: ['drone', 'temperatuur', 'luchtvochtigheid', 'luchtdruk'],
+        enabled: true,
         isDynamic: true,
         type: "dynamicgeojson",
         description: "Sensor data",
         defaultFeatureType: "droneData",
         defaultLegendProperty: "hoogte",
-        typeUrl: "api/resources/droneResourceTypes"
+        typeUrl: '/api/resources/droneResourceTypes'
     };
     var req = request.post(layerUrl, { json: true, body: layerDef }, function (err, res, body) {
         if (err) {
