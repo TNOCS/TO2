@@ -11,3 +11,9 @@ website/public/swagger/
 website/public/models/plane.gltf
 website/ServerComponents/*/*.d.ts
 website/public/data/projects/20150511/files/
+website/ServerComponents/
+*.js
+website/SimulationManager/public/bower_components/
+website/SimulationManager/public/swagger/
+website/all/public/bower_components/jquery-ui/themes/eggplant/images/ui-bg_flat_0_aaaaaa_40x100.png
+website/all/public/bower_components/
