@@ -84,7 +84,7 @@
                                     "name" : "POST"
                                 },
                                 "url" : "/api/keys/sim.cloudSimCmd",
-                                "message" : "{ \"scenario\": \"breach\"}",
+                                "message" : "{ \"scenario\": \"1_XLS_Air concentration - time grid\"}",
                                 "description" : "Scenario provided by ..."
                             }
                         ]
@@ -385,6 +385,67 @@
                     "gui" : {},
                     "tags" : []
                 }, {
+                    "id" : "cloudsim",
+                    "title" : "Gaswolk",
+                    "description" : "Gaswolk bij Ahoy.",
+                    "type" : "grid",
+                    "renderType" : "gridlayer",
+                    "url" : "http://localhost:4567/api/layers/cloudsim",
+                    "typeUrl" : "http://localhost:4567/api/resources/cloudsimtypes",
+                    "opacity" : 75,
+                    "dataSourceParameters" : {
+                        "propertyName" : "c",
+                        "gridType" : "esri",
+                        "projection" : "WGS84",
+                        "contourLevels" : [
+                            0.00001,
+                            0.0001,
+                            0.001,
+                            0.01
+                        ],
+                        "skipLines" : 6,
+                        "columns" : 101,
+                        "rows" : 51,
+                        "noDataValue" : -1, 
+                        "deltaLon" : 0.0014584288488676631,
+                        "deltaLat" : -0.0008877224387042511,
+                        "startLon" : 4.487947,
+                        "startLat" : 51.882756,
+                        "legend" : {
+                            "id" : "Concentration",
+                            "visualAspect" : "fillColor",
+                            "description" : "Concentration [mg/m3]",
+                            "legendKind" : "interpolated",
+                            "legendEntries" : [{
+                                    "label" : "0",
+                                    "value" : 0,
+                                    "color" : "#ffbc8f"
+                                }, {
+                                    "label" : "0.00001",
+                                    "value" : 0.00001,
+                                    "color" : "#eb6d00"
+                                }, {
+                                    "label" : "0.0001",
+                                    "value" : 0.0001,
+                                    "color" : "#8f4300"
+                                }, {
+                                    "label" : "0.001",
+                                    "value" : 0.001,
+                                    "color" : "#6b2900"
+                                }, {
+                                    "label" : ">0.01",
+                                    "value" : 0.01,
+                                    "color" : "#3d1700"
+                                }
+                            ]
+                        }
+                    },
+                    "defaultFeatureType" : "cloud",
+                    "defaultLegendProperty" : "c",
+                    "isDynamic" : true,
+                    "gui" : {},
+                    "tags" : []
+                },{
                     "id" : "powerstations",
                     "title" : "Stroomstations",
                     "description" : "Elektrische stroomstations",

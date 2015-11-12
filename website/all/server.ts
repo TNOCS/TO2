@@ -24,6 +24,7 @@ import FileStorage = require('./../ServerComponents/api/FileStorage');
 import Utils = require('./../ServerComponents/helpers/Utils');
 
 import FloodSim = require('../FloodSim/src/FloodSim');
+import CloudSim = require('../CloudSim/src/CloudSim');
 import ElectricalNetworkSim = require('../ElectricalNetworkSim/src/ElectricalNetworkSim');
 import CommunicationSim = require('../CommunicationSim/src/CommunicationSim');
 import CriticalObjectSim = require('../CriticalObjectSim/src/CriticalObjectSim');
@@ -94,7 +95,7 @@ var prefix = SimSvc.SimServiceManager.namespace;
 
 var api = new SimMngr.SimulationManager('cs', 'SimulationManager', false, {
     server: `${Utils.getIPAddress()}:${port}`,
-    mqttSubscriptions: [ 'cs/layers/communicationobjects', 'cs/layers/roadobjects', 'cs/layers/floodsim', 'cs/layers/powerstations', 'cs/layers/hazardousobjects', 'cs/layers/criticalobjects',
+    mqttSubscriptions: [ 'cs/layers/communicationobjects', 'cs/layers/roadobjects', 'cs/layers/floodsim', 'cs/layers/cloudsim', 'cs/layers/powerstations', 'cs/layers/hazardousobjects', 'cs/layers/criticalobjects',
     'cs/layers/roadobjects/feature/#', 'cs/layers/powerstations/feature/#', 'cs/layers/criticalobjects/feature/#', 'cs/layers/hazardousobjects/feature/#', 'cs/layers/communicationobjects/feature/#', 'cs/keys/#' ]
 });
 api.init(path.join(path.resolve(__dirname), "public/data"), () => {
@@ -114,6 +115,18 @@ floodSim.init(path.join(path.resolve(__dirname), "../FloodSim/public/data"), () 
     floodSim.addConnector("mqtt", new MqttAPI.MqttAPI("localhost", 1883), {});
     floodSim.addConnector("file", new FileStorage.FileStorage(path.join(path.resolve(__dirname), "../FloodSim/public/data/")), {});
     floodSim.start();
+});
+
+/** Start CloudSim server */
+var cloudSim = new CloudSim.CloudSim('cs', 'CloudSim', false, <Api.IApiManagerOptions>{
+    server: `${Utils.getIPAddress()}:${port}`,
+    mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/keys/sim/cloudSimCmd']
+});
+cloudSim.init(path.join(path.resolve(__dirname), "../CloudSim/public/data"), () => {
+    // cloudSim.addConnector("rest", new RestAPI.RestAPI(server), {});
+    cloudSim.addConnector("mqtt", new MqttAPI.MqttAPI("localhost", 1883), {});
+    cloudSim.addConnector("file", new FileStorage.FileStorage(path.join(path.resolve(__dirname), "../CloudSim/public/data/")), {});
+    cloudSim.start();
 });
 
 /** Start CommunicationSim server */
