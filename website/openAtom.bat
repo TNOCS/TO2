@@ -1,0 +1,1 @@
+start /B atom ./ ../csComp ../csServerComp ../test
