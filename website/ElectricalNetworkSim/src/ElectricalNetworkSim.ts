@@ -67,6 +67,23 @@ export class ElectricalNetworkSim extends SimSvc.SimServiceManager {
             Winston.info(`Type: ${changed.type}`);
             this.flooding(layer);
         });
+
+        this.on(Api.Event[Api.Event.FeatureChanged], (changed: Api.IChangeEvent) => {
+            if (!changed.value) return;
+            var f = <Api.Feature> changed.value;
+            var foundIndex = -1;
+            this.powerStations.some((ps, index)=>{
+                if (ps.properties['Name'] === f.properties['Name']) {
+                    foundIndex = index;
+                }
+                return (foundIndex > -1);
+            });
+            if (foundIndex > -1) this.powerStations[foundIndex] = f;
+            // this.updateFeature(this.powerLayer.id, f, <Api.ApiMeta>{source: 'mqtt'}, () => { });
+            Winston.info('ElecSim: Feature update received');
+            Winston.info(`ID  : ${changed.id}`);
+            Winston.info(`_dep_water: ${f.properties['_dep_water']}`);
+        });
     }
 
     private flooding(layer: Api.ILayer) {
@@ -90,14 +107,8 @@ export class ElectricalNetworkSim extends SimSvc.SimServiceManager {
 
             // Check the max water level the station is able to resist
             var waterResistanceLevel = 0;
-            if (ps.properties.hasOwnProperty('dependencies')) {
-                ps.properties['dependencies'].forEach((dep) => {
-                    var splittedDep = dep.split('#');
-                    if (splittedDep.length === 2) {
-                        if (splittedDep[0] !== 'water') return;
-                        waterResistanceLevel = +splittedDep[1];
-                    }
-                });
+            if (ps.properties.hasOwnProperty('_dep_water')) {
+                waterResistanceLevel = +ps.properties['_dep_water'];
             }
             if (waterLevel > waterResistanceLevel) {
                 this.setFeatureState(ps, SimSvc.InfrastructureState.Failed, SimSvc.FailureMode.Flooded, true);
@@ -114,22 +125,17 @@ export class ElectricalNetworkSim extends SimSvc.SimServiceManager {
         var additionalFailures = false;
         for (let i = 0; i < this.powerStations.length; i++) {
             var ps = this.powerStations[i];
-            if (!ps.properties.hasOwnProperty('dependencies')) continue;
+            if (!ps.properties.hasOwnProperty('_dep_features')) continue;
             var state = this.getFeatureState(ps);
             if (state === SimSvc.InfrastructureState.Failed) continue;
-            var dependencies: string[] = ps.properties['dependencies'];
+            var dependencies: string[] = ps.properties['_dep_features'];
             var failedDependencies = 0;
             var okDependencies = 0;
-            dependencies.forEach(dp => {
-                var splittedDp = dp.split('#');
-                if (splittedDp.length === 2) {
-                    if (splittedDp[0] !== 'powerstation') return;
-                    let dpName = splittedDp[1];
-                    if (failedPowerStations.indexOf(dpName) >= 0) {
-                        failedDependencies++;
-                    } else {
-                        okDependencies++;
-                    }
+            dependencies.forEach(dpName => {
+                if (failedPowerStations.indexOf(dpName) >= 0) {
+                    failedDependencies++;
+                } else {
+                    okDependencies++;
                 }
             });
             if (failedDependencies === 0) continue;

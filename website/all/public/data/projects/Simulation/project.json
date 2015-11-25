@@ -279,6 +279,26 @@
                         "key" : "chart",
                         "title" : "Geëvacueerde ziekenhuisbedden"
                     }
+                }, {
+                    "id" : "marvel123",
+                    "directive" : "marvelwidget",
+                    "elementId" : "widget-marvel123",
+                    "enabled" : true,
+                    "customStyle" : {
+                        "borderWidth" : 1,
+                        "background" : "white",
+                        "opacity" : "0.9"
+                    },
+                    "style" : "custom",
+                    "left" : "20px",
+                    "right" : "",
+                    "top" : "490px",
+                    "width" : "450px",
+                    "height" : "300px",
+                    "data" : {
+                        "marvelFolder" : "data/marvels/",
+                        "featureTypeName" : "*"
+                    }
                 }
             ],
             "visibleLeftMenuItems" : [
@@ -406,7 +426,7 @@
                         "skipLines" : 6,
                         "columns" : 101,
                         "rows" : 51,
-                        "noDataValue" : -1, 
+                        "noDataValue" : -1,
                         "deltaLon" : 0.0014584288488676631,
                         "deltaLat" : -0.0008877224387042511,
                         "startLon" : 4.487947,
@@ -445,7 +465,7 @@
                     "isDynamic" : true,
                     "gui" : {},
                     "tags" : []
-                },{
+                }, {
                     "id" : "powerstations",
                     "title" : "Stroomstations",
                     "description" : "Elektrische stroomstations",
@@ -496,7 +516,7 @@
                     "tags" : []
                 }
             ]
-        },{
+        }, {
             "id" : "76947763-7f29-4fa7-05af-901a08bc4444",
             "title" : "Incidents",
             "clustering" : true,
@@ -513,8 +533,7 @@
                     "isDynamic" : true,
                     "gui" : {},
                     "tags" : []
-                },
-                {
+                }, {
                     "id" : "omtrek",
                     "title" : "Omtrek scenario",
                     "type" : "geojson",
@@ -523,7 +542,7 @@
                     "url" : "data/src/omtrek.json",
                     "typeUrl" : "data/resourceTypes/betuwelijn.json",
                     "defaultFeatureType" : "betuwelijn",
-                    "opacity" :50,
+                    "opacity" : 50,
                     "fitToMap" : true,
                     "isDynamic" : false,
                     "gui" : {},

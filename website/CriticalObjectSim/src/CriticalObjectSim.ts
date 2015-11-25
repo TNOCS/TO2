@@ -185,18 +185,11 @@ export class CriticalObjectSim extends SimSvc.SimServiceManager {
             if (!inBlackout) continue;
             // Check for UPS
             var upsFound = false;
-            if (co.properties['state'] === SimSvc.InfrastructureState.Ok && co.properties.hasOwnProperty('dependencies')) {
-                co.properties['dependencies'].forEach((dep) => {
-                    var splittedDep = dep.split('#');
-                    if (splittedDep.length === 2) {
-                        if (splittedDep[0] === 'UPS') {
-                            let minutes = +splittedDep[1];
-                            let failTime = this.simTime.addMinutes(minutes);
-                            upsFound = true;
-                            this.setFeatureState(co, SimSvc.InfrastructureState.Stressed, SimSvc.FailureMode.NoMainPower, failTime, true);
-                        }
-                    }
-                });
+            if (co.properties['state'] === SimSvc.InfrastructureState.Ok && co.properties.hasOwnProperty('_dep_UPS')) {
+                let minutes = +co.properties['_dep_UPS'];
+                let failTime = this.simTime.addMinutes(minutes);
+                upsFound = true;
+                this.setFeatureState(co, SimSvc.InfrastructureState.Stressed, SimSvc.FailureMode.NoMainPower, failTime, true);
             }
             if (!upsFound && !co.properties.hasOwnProperty('willFailAt')) {
                 this.setFeatureState(co, SimSvc.InfrastructureState.Failed, SimSvc.FailureMode.NoBackupPower, null, true);
@@ -246,14 +239,8 @@ export class CriticalObjectSim extends SimSvc.SimServiceManager {
             var waterLevel = getWaterLevel(co.geometry.coordinates);
             // Check the max water level the object is able to resist
             var waterResistanceLevel = 0;
-            if (co.properties.hasOwnProperty('dependencies')) {
-                co.properties['dependencies'].forEach((dep) => {
-                    var splittedDep = dep.split('#');
-                    if (splittedDep.length === 2) {
-                        if (splittedDep[0] !== 'water') return;
-                        waterResistanceLevel = +splittedDep[1];
-                    }
-                });
+            if (co.properties.hasOwnProperty('_dep_water')) {
+                waterResistanceLevel = co.properties['_dep_water'];
             }
             if (waterLevel > waterResistanceLevel) {
                 this.setFeatureState(co, SimSvc.InfrastructureState.Failed, SimSvc.FailureMode.Flooded, null, true);
@@ -270,10 +257,10 @@ export class CriticalObjectSim extends SimSvc.SimServiceManager {
         var additionalFailures = false;
         for (let i = 0; i < this.criticalObjects.length; i++) {
             var co = this.criticalObjects[i];
-            if (!co.properties.hasOwnProperty('dependencies')) continue;
+            if (!co.properties.hasOwnProperty('_dep_features')) continue;
             var state = this.getFeatureState(co);
             if (state === SimSvc.InfrastructureState.Failed) continue;
-            var dependencies: string[] = co.properties['dependencies'];
+            var dependencies: string[] = co.properties['_dep_features'];
             var failedDependencies = 0;
             dependencies.forEach(dp => {
                 if (failedObjects.indexOf(dp) >= 0) failedDependencies++;

@@ -117,34 +117,34 @@ floodSim.init(path.join(path.resolve(__dirname), "../FloodSim/public/data"), () 
     floodSim.start();
 });
 
-/** Start CloudSim server */
-var cloudSim = new CloudSim.CloudSim('cs', 'CloudSim', false, <Api.IApiManagerOptions>{
-    server: `${Utils.getIPAddress()}:${port}`,
-    mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/keys/sim/cloudSimCmd']
-});
-cloudSim.init(path.join(path.resolve(__dirname), "../CloudSim/public/data"), () => {
-    // cloudSim.addConnector("rest", new RestAPI.RestAPI(server), {});
-    cloudSim.addConnector("mqtt", new MqttAPI.MqttAPI("localhost", 1883), {});
-    cloudSim.addConnector("file", new FileStorage.FileStorage(path.join(path.resolve(__dirname), "../CloudSim/public/data/")), {});
-    cloudSim.start();
-});
+// /** Start CloudSim server */
+// var cloudSim = new CloudSim.CloudSim('cs', 'CloudSim', false, <Api.IApiManagerOptions>{
+//     server: `${Utils.getIPAddress()}:${port}`,
+//     mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/keys/sim/cloudSimCmd']
+// });
+// cloudSim.init(path.join(path.resolve(__dirname), "../CloudSim/public/data"), () => {
+//     // cloudSim.addConnector("rest", new RestAPI.RestAPI(server), {});
+//     cloudSim.addConnector("mqtt", new MqttAPI.MqttAPI("localhost", 1883), {});
+//     cloudSim.addConnector("file", new FileStorage.FileStorage(path.join(path.resolve(__dirname), "../CloudSim/public/data/")), {});
+//     cloudSim.start();
+// });
 
-/** Start CommunicationSim server */
-var communicationSim = new CommunicationSim.CommunicationSim('cs', 'CommunicationSim', false, <Api.IApiManagerOptions>{
-    server: `${Utils.getIPAddress()}:${port}`,
-    mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/layers/floodsim', 'cs/layers/powerstations/feature/#']
-});
-communicationSim.init(path.join(path.resolve(__dirname), "../CommunicationSim/public/data"), () => {
-    // communicationSim.addConnector("rest", new RestAPI.RestAPI(server), {});
-    communicationSim.addConnector("mqtt", new MqttAPI.MqttAPI("localhost", 1883), {});
-    communicationSim.addConnector("file", new FileStorage.FileStorage(path.join(path.resolve(__dirname), "../CommunicationSim/public/data/")), {});
-    communicationSim.start();
-});
+// /** Start CommunicationSim server */
+// var communicationSim = new CommunicationSim.CommunicationSim('cs', 'CommunicationSim', false, <Api.IApiManagerOptions>{
+//     server: `${Utils.getIPAddress()}:${port}`,
+//     mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/layers/floodsim', 'cs/layers/powerstations/feature/#']
+// });
+// communicationSim.init(path.join(path.resolve(__dirname), "../CommunicationSim/public/data"), () => {
+//     // communicationSim.addConnector("rest", new RestAPI.RestAPI(server), {});
+//     communicationSim.addConnector("mqtt", new MqttAPI.MqttAPI("localhost", 1883), {});
+//     communicationSim.addConnector("file", new FileStorage.FileStorage(path.join(path.resolve(__dirname), "../CommunicationSim/public/data/")), {});
+//     communicationSim.start();
+// });
 
 /** Start ElectricalNetworkSim server */
 var electricalNetworkSim = new ElectricalNetworkSim.ElectricalNetworkSim('cs', 'ElectricalNetworkSim', false, <Api.IApiManagerOptions>{
     server: `${Utils.getIPAddress()}:${port}`,
-    mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/layers/floodsim']
+    mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/layers/floodsim', 'cs/layers/powerstations/feature/#']
 });
 electricalNetworkSim.init(path.join(path.resolve(__dirname), "../ElectricalNetworkSim/public/data"), () => {
     // electricalNetworkSim.addConnector("rest", new RestAPI.RestAPI(server), {});
@@ -165,29 +165,29 @@ criticalObjectSim.init(path.join(path.resolve(__dirname), "../CriticalObjectSim/
     criticalObjectSim.start();
 });
 
-/** Start RoadSim server */
-var roadSim = new RoadSim.RoadSim('cs', 'RoadSim', false, <Api.IApiManagerOptions>{
-    server: `${Utils.getIPAddress()}:${port}`,
-    mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/layers/floodsim', 'cs/layers/powerstations/feature/#']
-});
-roadSim.init(path.join(path.resolve(__dirname), "../RoadSim/public/data"), () => {
-    // roadSim.addConnector("rest", new RestAPI.RestAPI(server), {});
-    roadSim.addConnector("mqtt", new MqttAPI.MqttAPI("localhost", 1883), {});
-    roadSim.addConnector("file", new FileStorage.FileStorage(path.join(path.resolve(__dirname), "../RoadSim/public/data/")), {});
-    roadSim.start();
-});
-
-/** Start HazardousObjectSim server */
-var hazardousObjectSim = new HazardousObjectSim.HazardousObjectSim('cs', 'HazardousObjectSim', false, <Api.IApiManagerOptions>{
-    server: `${Utils.getIPAddress()}:${port}`,
-    mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/layers/floodsim', 'cs/layers/powerstations/feature/#']
-});
-hazardousObjectSim.init(path.join(path.resolve(__dirname), "../HazardousObjectSim/public/data"), () => {
-    // hazardousObjectSim.addConnector("rest", new RestAPI.RestAPI(server), {});
-    hazardousObjectSim.addConnector("mqtt", new MqttAPI.MqttAPI("localhost", 1883), {});
-    hazardousObjectSim.addConnector("file", new FileStorage.FileStorage(path.join(path.resolve(__dirname), "../HazardousObjectSim/public/data/")), {});
-    hazardousObjectSim.start();
-});
+// /** Start RoadSim server */
+// var roadSim = new RoadSim.RoadSim('cs', 'RoadSim', false, <Api.IApiManagerOptions>{
+//     server: `${Utils.getIPAddress()}:${port}`,
+//     mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/layers/floodsim', 'cs/layers/powerstations/feature/#']
+// });
+// roadSim.init(path.join(path.resolve(__dirname), "../RoadSim/public/data"), () => {
+//     // roadSim.addConnector("rest", new RestAPI.RestAPI(server), {});
+//     roadSim.addConnector("mqtt", new MqttAPI.MqttAPI("localhost", 1883), {});
+//     roadSim.addConnector("file", new FileStorage.FileStorage(path.join(path.resolve(__dirname), "../RoadSim/public/data/")), {});
+//     roadSim.start();
+// });
+//
+// /** Start HazardousObjectSim server */
+// var hazardousObjectSim = new HazardousObjectSim.HazardousObjectSim('cs', 'HazardousObjectSim', false, <Api.IApiManagerOptions>{
+//     server: `${Utils.getIPAddress()}:${port}`,
+//     mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/layers/floodsim', 'cs/layers/powerstations/feature/#']
+// });
+// hazardousObjectSim.init(path.join(path.resolve(__dirname), "../HazardousObjectSim/public/data"), () => {
+//     // hazardousObjectSim.addConnector("rest", new RestAPI.RestAPI(server), {});
+//     hazardousObjectSim.addConnector("mqtt", new MqttAPI.MqttAPI("localhost", 1883), {});
+//     hazardousObjectSim.addConnector("file", new FileStorage.FileStorage(path.join(path.resolve(__dirname), "../HazardousObjectSim/public/data/")), {});
+//     hazardousObjectSim.start();
+// });
 
 httpServer.listen(server.get('port'), () => {
     Winston.info('Express server listening on port ' + server.get('port'));
