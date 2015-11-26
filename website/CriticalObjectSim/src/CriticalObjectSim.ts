@@ -89,6 +89,20 @@ export class CriticalObjectSim extends SimSvc.SimServiceManager {
             this.blackout(f);
         });
 
+        this.on(Api.Event[Api.Event.FeatureChanged], (changed: Api.IChangeEvent) => {
+            if (!changed.id || !(changed.id === 'criticalobjects') || !changed.value) return;
+            var f = <Api.Feature> changed.value;
+            var foundIndex = -1;
+            this.criticalObjects.some((co, index)=>{
+                if (co.id === f.id) {
+                    foundIndex = index;
+                }
+                return (foundIndex > -1);
+            });
+            if (foundIndex > -1) this.criticalObjects[foundIndex] = f;
+            Winston.info('CoSim: Feature update received');
+        });
+
         this.on('simTimeChanged', () => {
             if (!this.nextEvent || this.nextEvent > this.simTime.getTime()) return;
             this.checkUps(); // Check power supplies

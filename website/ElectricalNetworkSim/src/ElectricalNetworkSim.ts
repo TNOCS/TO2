@@ -51,7 +51,7 @@ export class ElectricalNetworkSim extends SimSvc.SimServiceManager {
             if (message.hasOwnProperty('powerStation') && message.hasOwnProperty('state')) {
                 var name = message['powerStation'];
                 this.powerStations.some(ps => {
-                    if (ps.properties.hasOwnProperty('name') && ps.properties['name'] !== name) return false;
+                    if (ps.properties.hasOwnProperty('Name') && ps.properties['Name'] !== name) return false;
                     this.setFeatureState(ps, message['state'], SimSvc.FailureMode.Unknown, true);
                     return true;
                 });
@@ -69,11 +69,11 @@ export class ElectricalNetworkSim extends SimSvc.SimServiceManager {
         });
 
         this.on(Api.Event[Api.Event.FeatureChanged], (changed: Api.IChangeEvent) => {
-            if (!changed.value) return;
+            if (!changed.id || !(changed.id === 'powerstations') || !changed.value) return;
             var f = <Api.Feature> changed.value;
             var foundIndex = -1;
             this.powerStations.some((ps, index)=>{
-                if (ps.properties['Name'] === f.properties['Name']) {
+                if (ps.id === f.id) {
                     foundIndex = index;
                 }
                 return (foundIndex > -1);
@@ -81,7 +81,7 @@ export class ElectricalNetworkSim extends SimSvc.SimServiceManager {
             if (foundIndex > -1) this.powerStations[foundIndex] = f;
             // this.updateFeature(this.powerLayer.id, f, <Api.ApiMeta>{source: 'mqtt'}, () => { });
             Winston.info('ElecSim: Feature update received');
-            Winston.info(`ID  : ${changed.id}`);
+            Winston.info(`ID  : ${changed}`);
             Winston.info(`_dep_water: ${f.properties['_dep_water']}`);
         });
     }
@@ -100,7 +100,7 @@ export class ElectricalNetworkSim extends SimSvc.SimServiceManager {
             var ps = this.powerStations[i];
             var state = this.getFeatureState(ps);
             if (state === SimSvc.InfrastructureState.Failed) {
-                failedPowerStations.push(ps.properties['name']);
+                failedPowerStations.push(ps.properties['Name']);
                 continue;
             }
             var waterLevel = getWaterLevel(ps.geometry.coordinates);
@@ -112,7 +112,7 @@ export class ElectricalNetworkSim extends SimSvc.SimServiceManager {
             }
             if (waterLevel > waterResistanceLevel) {
                 this.setFeatureState(ps, SimSvc.InfrastructureState.Failed, SimSvc.FailureMode.Flooded, true);
-                failedPowerStations.push(ps.properties['name']);
+                failedPowerStations.push(ps.properties['Name']);
             } else if (waterLevel > 0) {
                 this.setFeatureState(ps, SimSvc.InfrastructureState.Stressed, SimSvc.FailureMode.Flooded, true);
             }
@@ -143,7 +143,7 @@ export class ElectricalNetworkSim extends SimSvc.SimServiceManager {
                 this.setFeatureState(ps, SimSvc.InfrastructureState.Stressed, SimSvc.FailureMode.LimitedPower, true);
             } else {
                 this.setFeatureState(ps, SimSvc.InfrastructureState.Failed, SimSvc.FailureMode.NoMainPower, true);
-                failedPowerStations.push(ps.properties["name"]);
+                failedPowerStations.push(ps.properties["Name"]);
                 additionalFailures = true;
             }
         }
@@ -207,7 +207,7 @@ export class ElectricalNetworkSim extends SimSvc.SimServiceManager {
             var psa = new Api.Feature();
             psa.id = Utils.newGuid();
             psa.properties = {
-                name: 'Blackout area',
+                Name: 'Blackout area',
                 featureTypeId: 'AffectedArea'
             };
             psa.geometry = JSON.parse(feature.properties['powerSupplyArea']);

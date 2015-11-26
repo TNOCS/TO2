@@ -156,7 +156,7 @@ electricalNetworkSim.init(path.join(path.resolve(__dirname), "../ElectricalNetwo
 /** Start CriticalObjectSim server */
 var criticalObjectSim = new CriticalObjectSim.CriticalObjectSim('cs', 'CriticalObjectSim', false, <Api.IApiManagerOptions>{
     server: `${Utils.getIPAddress()}:${port}`,
-    mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/layers/floodsim', 'cs/layers/powerstations/feature/#']
+    mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/layers/floodsim', 'cs/layers/powerstations/feature/#', 'cs/layers/criticalobjects/feature/#']
 });
 criticalObjectSim.init(path.join(path.resolve(__dirname), "../CriticalObjectSim/public/data"), () => {
     // criticalObjectSim.addConnector("rest", new RestAPI.RestAPI(server), {});
