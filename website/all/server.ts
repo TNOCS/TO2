@@ -165,17 +165,17 @@ criticalObjectSim.init(path.join(path.resolve(__dirname), "../CriticalObjectSim/
     criticalObjectSim.start();
 });
 
-// /** Start RoadSim server */
-// var roadSim = new RoadSim.RoadSim('cs', 'RoadSim', false, <Api.IApiManagerOptions>{
-//     server: `${Utils.getIPAddress()}:${port}`,
-//     mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/layers/floodsim', 'cs/layers/powerstations/feature/#']
-// });
-// roadSim.init(path.join(path.resolve(__dirname), "../RoadSim/public/data"), () => {
-//     // roadSim.addConnector("rest", new RestAPI.RestAPI(server), {});
-//     roadSim.addConnector("mqtt", new MqttAPI.MqttAPI("localhost", 1883), {});
-//     roadSim.addConnector("file", new FileStorage.FileStorage(path.join(path.resolve(__dirname), "../RoadSim/public/data/")), {});
-//     roadSim.start();
-// });
+/** Start RoadSim server */
+var roadSim = new RoadSim.RoadSim('cs', 'RoadSim', false, <Api.IApiManagerOptions>{
+    server: `${Utils.getIPAddress()}:${port}`,
+    mqttSubscriptions: ['cs/keys/Sim/SimTime', 'cs/layers/floodsim', 'cs/layers/powerstations/feature/#', 'cs/layers/roadobjects/feature/#']
+});
+roadSim.init(path.join(path.resolve(__dirname), "../RoadSim/public/data"), () => {
+    // roadSim.addConnector("rest", new RestAPI.RestAPI(server), {});
+    roadSim.addConnector("mqtt", new MqttAPI.MqttAPI("localhost", 1883), {});
+    roadSim.addConnector("file", new FileStorage.FileStorage(path.join(path.resolve(__dirname), "../RoadSim/public/data/")), {});
+    roadSim.start();
+});
 //
 // /** Start HazardousObjectSim server */
 // var hazardousObjectSim = new HazardousObjectSim.HazardousObjectSim('cs', 'HazardousObjectSim', false, <Api.IApiManagerOptions>{

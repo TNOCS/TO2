@@ -77,6 +77,47 @@ export class RoadSim extends SimSvc.SimServiceManager {
             Winston.info(`Type: ${changed.type}`);
             this.blackout(f);
         });
+
+        this.on(Api.Event[Api.Event.FeatureChanged], (changed: Api.IChangeEvent) => {
+            if (!changed.id || !(changed.id === 'roadobjects') || !changed.value) return;
+            var updateAllFeatures = false;
+            if (changed.value.hasOwnProperty('changeAllFeaturesOfType') && changed.value['changeAllFeaturesOfType'] === true) {
+                updateAllFeatures = true;
+                delete changed.value['changeAllFeaturesOfType'];
+            }
+            var f = <Api.Feature> changed.value;
+            if (!updateAllFeatures) {
+                // Update a single feature
+                var foundIndex = -1;
+                this.roadObjects.some((ro, index) => {
+                    if (ro.id === f.id) {
+                        foundIndex = index;
+                    }
+                    return (foundIndex > -1);
+                });
+                if (foundIndex > -1) this.roadObjects[foundIndex] = f;
+            } else {
+                // Update all features of the same featuretype
+                let dependencies = {};
+                Object.keys(f.properties).forEach((key) => {
+                    if (key.indexOf('_dep') === 0) {
+                        dependencies[key] = f.properties[key];
+                    }
+                });
+                this.roadObjects.forEach((ro, index) => {
+                    if (ro.properties['featureTypeId'] === f.properties['featureTypeId']) {
+                        Object.keys(dependencies).forEach((dep) => {
+                            ro.properties[dep] = dependencies[dep];
+                        });
+                        if (ro.id !== f.id) {
+                            // Don't send update for the selectedFeature or it will loop forever...
+                            this.updateFeature(this.roadObjectsLayer.id, ro, <Api.ApiMeta>{}, () => { });
+                        }
+                    }
+                });
+            }
+            Winston.info('RoadSim: Feature update received');
+        });
     }
 
     private blackout(f: Api.Feature) {
@@ -148,7 +189,7 @@ export class RoadSim extends SimSvc.SimServiceManager {
             });
             // Check the max water level the road is able to resist
             var waterResistanceLevel = 0;
-            if (co.properties.hasOwnProperty('dependencies')){
+            if (co.properties.hasOwnProperty('dependencies')) {
                 co.properties['dependencies'].forEach((dep) => {
                     var splittedDep = dep.split('#');
                     if (splittedDep.length === 2) {
@@ -325,7 +366,7 @@ export class RoadSim extends SimSvc.SimServiceManager {
         // https://github.com/substack/point-in-polygon
         // ray-casting algorithm based on
         // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-        var inside = line.some((l) => {return (this.pointInsidePolygon(l, polygon))});
+        var inside = line.some((l) => { return (this.pointInsidePolygon(l, polygon)) });
         return inside;
     }
 }

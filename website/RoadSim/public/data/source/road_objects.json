@@ -6,7 +6,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "A20"
             },
             "geometry" : {
@@ -19,7 +19,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "A16"
             },
             "geometry" : {
@@ -32,7 +32,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "A20"
             },
             "geometry" : {
@@ -45,7 +45,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "A13"
             },
             "geometry" : {
@@ -58,7 +58,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "S100/S103"
             },
             "geometry" : {
@@ -71,7 +71,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "A20"
             },
             "geometry" : {
@@ -84,7 +84,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "A20"
             },
             "geometry" : {
@@ -97,7 +97,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "A4"
             },
             "geometry" : {
@@ -110,7 +110,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "A15"
             },
             "geometry" : {
@@ -123,7 +123,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "A15"
             },
             "geometry" : {
@@ -136,7 +136,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "A15"
             },
             "geometry" : {
@@ -149,7 +149,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "A16"
             },
             "geometry" : {
@@ -162,7 +162,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "A15"
             },
             "geometry" : {
@@ -175,7 +175,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "A16"
             },
             "geometry" : {
@@ -188,7 +188,7 @@
                 "RTT_DESCRI" : "Primary Route",
                 "F_CODE_DES" : "Road",
                 "featureTypeId" : "Road_{state}",
-                "dependencies" : ["water#0.1"],
+                "_dep_water" : 0.1,
                 "Name" : "A29"
             },
             "geometry" : {

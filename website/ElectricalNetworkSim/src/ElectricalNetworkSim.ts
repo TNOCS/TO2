@@ -70,19 +70,43 @@ export class ElectricalNetworkSim extends SimSvc.SimServiceManager {
 
         this.on(Api.Event[Api.Event.FeatureChanged], (changed: Api.IChangeEvent) => {
             if (!changed.id || !(changed.id === 'powerstations') || !changed.value) return;
+            var updateAllFeatures = false;
+            if (changed.value.hasOwnProperty('changeAllFeaturesOfType') && changed.value['changeAllFeaturesOfType'] === true) {
+                updateAllFeatures = true;
+                delete changed.value['changeAllFeaturesOfType'];
+            }
             var f = <Api.Feature> changed.value;
-            var foundIndex = -1;
-            this.powerStations.some((ps, index)=>{
-                if (ps.id === f.id) {
-                    foundIndex = index;
-                }
-                return (foundIndex > -1);
-            });
-            if (foundIndex > -1) this.powerStations[foundIndex] = f;
-            // this.updateFeature(this.powerLayer.id, f, <Api.ApiMeta>{source: 'mqtt'}, () => { });
+            if (!updateAllFeatures) {
+                // Update a single feature
+                var foundIndex = -1;
+                this.powerStations.some((ps, index) => {
+                    if (ps.id === f.id) {
+                        foundIndex = index;
+                    }
+                    return (foundIndex > -1);
+                });
+                if (foundIndex > -1) this.powerStations[foundIndex] = f;
+            } else {
+                // Update all features of the same featuretype
+                let dependencies = {};
+                Object.keys(f.properties).forEach((key) => {
+                    if (key.indexOf('_dep') === 0) {
+                        dependencies[key] = f.properties[key];
+                    }
+                });
+                this.powerStations.forEach((ps, index) => {
+                    if (ps.properties['featureTypeId'] === f.properties['featureTypeId']) {
+                        Object.keys(dependencies).forEach((dep) => {
+                            ps.properties[dep] = dependencies[dep];
+                        });
+                        if (ps.id !== f.id) {
+                            // Don't send update for the selectedFeature or it will loop forever...
+                            this.updateFeature(this.powerLayer.id, ps, <Api.ApiMeta>{}, () => { });
+                        }
+                    }
+                });
+            }
             Winston.info('ElecSim: Feature update received');
-            Winston.info(`ID  : ${changed}`);
-            Winston.info(`_dep_water: ${f.properties['_dep_water']}`);
         });
     }
 

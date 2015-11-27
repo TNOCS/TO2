@@ -91,15 +91,42 @@ export class CriticalObjectSim extends SimSvc.SimServiceManager {
 
         this.on(Api.Event[Api.Event.FeatureChanged], (changed: Api.IChangeEvent) => {
             if (!changed.id || !(changed.id === 'criticalobjects') || !changed.value) return;
+            var updateAllFeatures = false;
+            if (changed.value.hasOwnProperty('changeAllFeaturesOfType') && changed.value['changeAllFeaturesOfType'] === true) {
+                updateAllFeatures = true;
+                delete changed.value['changeAllFeaturesOfType'];
+            }
             var f = <Api.Feature> changed.value;
-            var foundIndex = -1;
-            this.criticalObjects.some((co, index)=>{
-                if (co.id === f.id) {
-                    foundIndex = index;
-                }
-                return (foundIndex > -1);
-            });
-            if (foundIndex > -1) this.criticalObjects[foundIndex] = f;
+            if (!updateAllFeatures) {
+                // Update a single feature
+                var foundIndex = -1;
+                this.criticalObjects.some((co, index) => {
+                    if (co.id === f.id) {
+                        foundIndex = index;
+                    }
+                    return (foundIndex > -1);
+                });
+                if (foundIndex > -1) this.criticalObjects[foundIndex] = f;
+            } else {
+                // Update all features of the same featuretype
+                let dependencies = {};
+                Object.keys(f.properties).forEach((key) => {
+                    if (key.indexOf('_dep') === 0) {
+                        dependencies[key] = f.properties[key];
+                    }
+                });
+                this.criticalObjects.forEach((co, index) => {
+                    if (co.properties['featureTypeId'] === f.properties['featureTypeId']) {
+                        Object.keys(dependencies).forEach((dep) => {
+                            co.properties[dep] = dependencies[dep];
+                        });
+                        if (co.id !== f.id) {
+                            // Don't send update for the selectedFeature or it will loop forever...
+                            this.updateFeature(this.criticalObjectsLayer.id, co, <Api.ApiMeta>{}, () => { });
+                        }
+                    }
+                });
+            }
             Winston.info('CoSim: Feature update received');
         });
 
@@ -178,7 +205,7 @@ export class CriticalObjectSim extends SimSvc.SimServiceManager {
                 Winston.info(`Available beds: ${availableBeds}`);
             }
         })
-        this.updateKey("chart", { values: this.bedsChartData}, <Api.ApiMeta>{}, () => { });
+        this.updateKey("chart", { values: this.bedsChartData }, <Api.ApiMeta>{}, () => { });
     }
 
     private checkBlackoutAreas(f: Api.Feature) {
@@ -284,7 +311,7 @@ export class CriticalObjectSim extends SimSvc.SimServiceManager {
                 this.setFeatureState(co, SimSvc.InfrastructureState.Stressed, SimSvc.FailureMode.LimitedPower, null, true);
             } else {
                 this.setFeatureState(co, SimSvc.InfrastructureState.Failed, SimSvc.FailureMode.NoMainPower, null, true);
-                failedObjects.push(co.properties["name"]);
+                failedObjects.push(co.properties["Name"]);
                 additionalFailures = true;
             }
         }

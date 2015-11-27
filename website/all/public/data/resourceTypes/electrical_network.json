@@ -138,6 +138,7 @@
                 "iconWidth" : 24,
                 "iconHeight" : 24,
                 "strokeColor" : "#ffa500",
+                "selectedStrokeColor" : "#ffa500",
                 "strokeWidth" : 4,
                 "stroke" : true,
                 "iconUri" : "images/Electricity/powerstation.png"
@@ -154,6 +155,7 @@
                 "iconWidth" : 24,
                 "iconHeight" : 24,
                 "strokeColor" : "#ff0000",
+                "selectedStrokeColor" : "#ff0000",
                 "strokeWidth" : 6,
                 "stroke" : true,
                 "iconUri" : "images/Electricity/powerstation.png"
