@@ -10,11 +10,6 @@ import SimSvc = require('../../SimulationService/api/SimServiceManager');
 import Grid = require('../../ServerComponents/import/IsoLines');
 import _ = require('underscore');
 
-export interface ChartData {
-    name: string;
-    values: { x: number, y: number }[];
-}
-
 /**
  * HazardousObjectSim
  *
@@ -27,7 +22,6 @@ export class HazardousObjectSim extends SimSvc.SimServiceManager {
     private relativeSourceFolder = 'source';
     private hazardousObjectsLayer: Api.ILayer;
     private hazardousObjects: Api.Feature[];
-    private bedsChartData: ChartData[];
     private upcomingEventTime: number; // milliseconds
 
     constructor(namespace: string, name: string, public isClient = false, public options: Api.IApiManagerOptions = <Api.IApiManagerOptions>{}) {
@@ -70,12 +64,50 @@ export class HazardousObjectSim extends SimSvc.SimServiceManager {
         });
 
         this.on(Api.Event[Api.Event.FeatureChanged], (changed: Api.IChangeEvent) => {
-            if (changed.id !== 'powerstations' || !changed.value) return;
-            var f = <Api.Feature> changed.value;
-            Winston.info('HOSim: Powerstations feature received');
-            Winston.info(`ID  : ${changed.id}`);
-            Winston.info(`Type: ${changed.type}`);
-            this.blackout(f);
+            if (!changed.id || !(changed.id === 'powerstations') || !(changed.id === 'hazardousobjects') || !changed.value) return;
+            if (changed.id === 'powerstations') {
+                var f = <Api.Feature> changed.value;
+                Winston.info('HOSim: Powerstations feature received');
+                this.blackout(f);
+            } else if (changed.id === 'hazardousobjects') {
+                var updateAllFeatures = false;
+                if (changed.value.hasOwnProperty('changeAllFeaturesOfType') && changed.value['changeAllFeaturesOfType'] === true) {
+                    updateAllFeatures = true;
+                    delete changed.value['changeAllFeaturesOfType'];
+                }
+                var f = <Api.Feature> changed.value;
+                if (!updateAllFeatures) {
+                    // Update a single feature
+                    var foundIndex = -1;
+                    this.hazardousObjects.some((ho, index) => {
+                        if (ho.id === f.id) {
+                            foundIndex = index;
+                        }
+                        return (foundIndex > -1);
+                    });
+                    if (foundIndex > -1) this.hazardousObjects[foundIndex] = f;
+                } else {
+                    // Update all features of the same featuretype
+                    let dependencies = {};
+                    Object.keys(f.properties).forEach((key) => {
+                        if (key.indexOf('_dep') === 0) {
+                            dependencies[key] = f.properties[key];
+                        }
+                    });
+                    this.hazardousObjects.forEach((ho, index) => {
+                        if (ho.properties['featureTypeId'] === f.properties['featureTypeId']) {
+                            Object.keys(dependencies).forEach((dep) => {
+                                ho.properties[dep] = dependencies[dep];
+                            });
+                            if (ho.id !== f.id) {
+                                // Don't send update for the selectedFeature or it will loop forever...
+                                this.updateFeature(this.hazardousObjectsLayer.id, ho, <Api.ApiMeta>{}, () => { });
+                            }
+                        }
+                    });
+                }
+            }
+            Winston.info('HoSim: Feature update received');
         });
     }
 

@@ -10,11 +10,6 @@ import SimSvc = require('../../SimulationService/api/SimServiceManager');
 import Grid = require('../../ServerComponents/import/IsoLines');
 import _ = require('underscore');
 
-export interface ChartData {
-    name: string;
-    values: { x: number, y: number }[];
-}
-
 /**
  * CommunicationSim
  *
@@ -27,7 +22,6 @@ export class CommunicationSim extends SimSvc.SimServiceManager {
     private relativeSourceFolder = 'source';
     private communicationObjectsLayer: Api.ILayer;
     private communicationObjects: Api.Feature[];
-    private bedsChartData: ChartData[];
     private upcomingEventTime: number; // milliseconds
 
     constructor(namespace: string, name: string, public isClient = false, public options: Api.IApiManagerOptions = <Api.IApiManagerOptions>{}) {
@@ -63,19 +57,56 @@ export class CommunicationSim extends SimSvc.SimServiceManager {
             if (changed.id !== 'floodsim' || !changed.value) return;
             var layer = <Api.ILayer> changed.value;
             if (!layer.data) return;
-            Winston.info('communicationObjectsLayerSim: Floodsim layer received');
-            Winston.info(`ID  : ${changed.id}`);
-            Winston.info(`Type: ${changed.type}`);
+            Winston.info(`CommSim: Floodsim layer received. ID: ${changed.id} Type:${changed.type}`);
             this.flooding(layer);
         });
 
         this.on(Api.Event[Api.Event.FeatureChanged], (changed: Api.IChangeEvent) => {
             if (changed.id !== 'powerstations' || !changed.value) return;
             var f = <Api.Feature> changed.value;
-            Winston.info('CommSim: Powerstations feature received');
-            Winston.info(`ID  : ${changed.id}`);
-            Winston.info(`Type: ${changed.type}`);
+            Winston.info(`CommSim: Powerstations feature received. ID: ${changed.id} Type:${changed.type}`);
             this.blackout(f);
+        });
+
+        this.on(Api.Event[Api.Event.FeatureChanged], (changed: Api.IChangeEvent) => {
+            if (!changed.id || !(changed.id === 'communicationobjects') || !changed.value) return;
+            var updateAllFeatures = false;
+            if (changed.value.hasOwnProperty('changeAllFeaturesOfType') && changed.value['changeAllFeaturesOfType'] === true) {
+                updateAllFeatures = true;
+                delete changed.value['changeAllFeaturesOfType'];
+            }
+            var f = <Api.Feature> changed.value;
+            if (!updateAllFeatures) {
+                // Update a single feature
+                var foundIndex = -1;
+                this.communicationObjects.some((co, index) => {
+                    if (co.id === f.id) {
+                        foundIndex = index;
+                    }
+                    return (foundIndex > -1);
+                });
+                if (foundIndex > -1) this.communicationObjects[foundIndex] = f;
+            } else {
+                // Update all features of the same featuretype
+                let dependencies = {};
+                Object.keys(f.properties).forEach((key) => {
+                    if (key.indexOf('_dep') === 0) {
+                        dependencies[key] = f.properties[key];
+                    }
+                });
+                this.communicationObjects.forEach((co, index) => {
+                    if (co.properties['featureTypeId'] === f.properties['featureTypeId']) {
+                        Object.keys(dependencies).forEach((dep) => {
+                            co.properties[dep] = dependencies[dep];
+                        });
+                        if (co.id !== f.id) {
+                            // Don't send update for the selectedFeature or it will loop forever...
+                            this.updateFeature(this.communicationObjectsLayer.id, co, <Api.ApiMeta>{}, () => { });
+                        }
+                    }
+                });
+            }
+            Winston.info('CommSim: Feature update received');
         });
     }
 
@@ -93,14 +124,14 @@ export class CommunicationSim extends SimSvc.SimServiceManager {
             var co = this.communicationObjects[i];
             var state = this.getFeatureState(co);
             if (state === SimSvc.InfrastructureState.Failed) {
-                failedObjects.push(co.properties['name']);
+                failedObjects.push(co.properties['Name']);
                 continue;
             }
             // var inBlackout = this.pointInsideMultiPolygon(co.geometry.coordinates, totalBlackoutArea.coordinates);
             var inBlackout = this.pointInsidePolygon(co.geometry.coordinates, totalBlackoutArea.coordinates);
             if (inBlackout) {
                 this.setFeatureState(co, SimSvc.InfrastructureState.Failed, SimSvc.FailureMode.NoBackupPower, true);
-                failedObjects.push(co.properties['name']);
+                failedObjects.push(co.properties['Name']);
             }
         }
         return failedObjects;
@@ -135,7 +166,7 @@ export class CommunicationSim extends SimSvc.SimServiceManager {
             var co = this.communicationObjects[i];
             var state = this.getFeatureState(co);
             if (state === SimSvc.InfrastructureState.Failed) {
-                failedObjects.push(co.properties['name']);
+                failedObjects.push(co.properties['Name']);
                 continue;
             }
             var waterLevel = getWaterLevel(co.geometry.coordinates);
@@ -152,7 +183,7 @@ export class CommunicationSim extends SimSvc.SimServiceManager {
             }
             if (waterLevel > waterResistanceLevel) {
                 this.setFeatureState(co, SimSvc.InfrastructureState.Failed, SimSvc.FailureMode.Flooded, true);
-                failedObjects.push(co.properties['name']);
+                failedObjects.push(co.properties['Name']);
             } else if (waterLevel > 0) {
                 this.setFeatureState(co, SimSvc.InfrastructureState.Stressed, SimSvc.FailureMode.Flooded, true);
             }
@@ -217,7 +248,7 @@ export class CommunicationSim extends SimSvc.SimServiceManager {
         //     var contour = new Api.Feature();
         //     contour.id = Utils.newGuid();
         //     contour.properties = {
-        //         name: 'Contour area',
+        //         Name: 'Contour area',
         //         featureTypeId: 'AffectedArea'
         //     };
         //     contour.geometry = JSON.parse(feature.properties['contour']);

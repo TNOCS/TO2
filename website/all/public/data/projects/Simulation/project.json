@@ -502,7 +502,14 @@
                     "isDynamic" : true,
                     "gui" : {},
                     "tags" : []
-                }, {
+                }
+            ]
+        }, {
+            "id" : "76947763-7f29-4fa7-05af-901a08bc4444",
+            "title" : "Incidents",
+            "clustering" : true,
+            "clusterLevel" : 13,
+            "layers" : [{
                     "id" : "communicationobjects",
                     "title" : "Zendmasten",
                     "type" : "dynamicgeojson",
@@ -514,14 +521,7 @@
                     "isDynamic" : true,
                     "gui" : {},
                     "tags" : []
-                }
-            ]
-        }, {
-            "id" : "76947763-7f29-4fa7-05af-901a08bc4444",
-            "title" : "Incidents",
-            "clustering" : true,
-            "clusterLevel" : 13,
-            "layers" : [{
+                }, {
                     "id" : "hazardousobjects",
                     "title" : "Gevaarlijke objecten",
                     "type" : "dynamicgeojson",
