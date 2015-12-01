@@ -1,0 +1,32 @@
+{
+    "type" : "FeatureCollection",
+    "features" : [{
+            "type" : "Feature",
+            "geometry" : {
+                "type" : "Point",
+                "coordinates" : [4.535322, 51.900562]
+            },
+            "properties" : {
+                "tags" : ["storm", "flood"],
+                "image" : ["images/storm1.jpg"],
+                "title" : "KNMI issues code orange",
+                "description" : "The KNMI weather bureau on Sunday issued a code orange weather warning for the north of the country and South Holland saying winds of up to 110 kph will batter coastal areas in the late afternoon. In the Wadden Sea area, the winds could reach up to 120 kph, the organisation said. A code yellow warning has been issued for the south and east. The winds will die down overnight but it will remain blustery and wet on Monday, the KNMI said. The city of Rotterdam might experience floods due to the high water levels in the river Rhine.",
+                "src" : "[url=http://www.dutchnews.nl/news/archives/2015/11/storm-force-winds-to-batter-northern-netherlands-on-sunday-afternoon/]www.dutchnews.nl[/url]"
+
+            }
+        }, {
+            "type" : "Feature",
+            "geometry" : {
+                "type" : "Point",
+                "coordinates" : [5.5375941, 51.3867333]
+            },
+            "properties" : {
+                "tags" : ["flood"],
+                "image" : ["images/storm2.jpg"],
+                "title" : "Man killed by overflowing river Rhine",
+                "description" : "The Dutch government (Rijkswaterstaat) says that one man was killed whilst working at a hydro power plant after he was swept away by an overflowing river Rhine in the Brabant province. Flooding has been reported in the southern provinces of Limburg and Brabant. The River Rhine overflowed in the village Heeze during the evening of 22 November 2015, forcing the evacuation of several families. Flooding has blocked roads, and caused damage to property and to several bridges in several counties. Many have been left without power and some without drinking water. Local media reported yesterday that 30,000 were left without power, including residents in the Eindhoven area.",
+                "src" : "[url=http://floodlist.com/europe/albania-floods-tirana-diber-durrres-1-dead]floodlist.com[/url]"
+            }
+        }
+    ]
+}

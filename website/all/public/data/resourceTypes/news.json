@@ -1,0 +1,59 @@
+{
+    "featureTypes" : {
+        "news" : {
+            "name" : "news",
+            "style" : {
+                "iconUri" : "images/news.png",
+                "fillColor" : "#ffffff",
+                "strokeColor" : "#7766ff",
+                "strokeWidth" : 3,
+                "iconWidth" : 24,
+                "iconHeight" : 24,
+                "nameLabel" : "title"
+            },
+            "propertyTypeKeys" : "title;description;image;src;"
+        }
+    },
+    "propertyTypeData" : {
+        "title" : {
+            "label" : "title",
+            "title" : "Title",
+            "type" : "text",
+            "visibleInCallOut" : true,
+            "canEdit" : true,
+            "isSearchable" : false
+        },
+        "tags" : {
+            "label" : "tags",
+            "title" : "tags",
+            "type" : "text",
+            "visibleInCallOut" : false,
+            "canEdit" : true,
+            "isSearchable" : false
+        },
+        "description" : {
+            "label" : "description",
+            "title" : "Description",
+            "type" : "textarea",
+            "visibleInCallOut" : true,
+            "canEdit" : true,
+            "isSearchable" : false
+        },
+        "image" : {
+            "label" : "image",
+            "title" : "Image",
+            "type" : "media",
+            "visibleInCallOut" : true,
+            "canEdit" : true,
+            "isSearchable" : false
+        },
+        "src" : {
+            "label" : "src",
+            "title" : "Source",
+            "type" : "bbcode",
+            "visibleInCallOut" : true,
+            "canEdit" : true,
+            "isSearchable" : false
+        }
+    }
+}
